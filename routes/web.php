@@ -23,3 +23,13 @@ Route::get('/about', function () {
         "email" => "lala@gmail.com"
     ]);
 });
+
+$data_saya = [
+    'satu' => "Admin",
+    'dua' => "User",
+    'tiga' => "Guest"
+];
+
+Route::get('/tugas', function () use($data_saya) {
+    return view('template3', $data_saya);
+});
