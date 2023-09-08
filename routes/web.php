@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,3 +34,6 @@ $data_saya = [
 Route::get('/tugas', function () use($data_saya) {
     return view('template3', $data_saya);
 });
+
+
+Route::get('/controllerAbout', [PostController::class, 'panggilAbout']);
