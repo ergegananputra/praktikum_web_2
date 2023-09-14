@@ -3,6 +3,7 @@
 use App\Http\Controllers\Pertemuan4Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\BookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +42,4 @@ Route::get('/controllerAbout', [PostController::class, 'panggilAbout']);
 
 Route::get('/pertemuan_4', [Pertemuan4Controller::class, 'index']);
 Route::get('/pertemuan_4_satunya', [Pertemuan4Controller::class, 'tesDariController']);
+Route::get('/buku', [BookController::class, 'index']);
