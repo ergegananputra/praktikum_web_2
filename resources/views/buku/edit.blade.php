@@ -9,10 +9,8 @@
 </head>
 <body>
     @extends('../mainStyle')
-
     <div class="d-flex flex-column align-items-center">
         <h1>EDIT BUKU</h1>
-
         <form action="{{route('buku.update', $buku->id)}}" method="POST" class="form_tambah_buku">
             @csrf
             <div class="form-group row">
@@ -44,13 +42,7 @@
                 <div class="align-self-center batal"><a href="/buku">Batal</a></div>
                 <button type="submit" class="align-self-center simpan">Simpan</button>
             </div>
-
         </form>
-        
     </div>
-
-
-        
-    
 </body>
 </html>

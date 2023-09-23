@@ -41,6 +41,7 @@
                         <a href="{{ route('buku.edit', $buku->id)}}">
                             <button class="aksi edit">Edit</button>
                         </a> 
+                    </th>
                         
                 </tr>
                 @endforeach
