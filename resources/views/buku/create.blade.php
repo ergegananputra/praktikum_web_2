@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/css/tambahbuku.css">
-    <title>Halaman Create</title>
-</head>
-<body>
-    @extends('../mainStyle')
+
+@extends('layouts.app')
+
+@section('content')
+    
+
 
     <div class="d-flex flex-column align-items-center">
         <h1>TAMBAH BUKU</h1>
@@ -40,10 +35,20 @@
                 </div>
             </div>
 
-            <div class="aksi row justify-content-around">
-                <div class="align-self-center batal"><a href="/buku">Batal</a></div>
-                <button type="submit" class="align-self-center simpan">Simpan</button>
+            <div class="row">
+                <a href="/buku" class="col  btn btn-danger">Batal</a>
+                <button type="submit" class="col  btn btn-primary">Simpan</button>
             </div>
+            @if (count($errors) > 0)
+            <br>
+                <ul class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            @endif
+
+            
 
             
 
@@ -51,8 +56,5 @@
         
     </div>
 
-
-        
+@endsection
     
-</body>
-</html>

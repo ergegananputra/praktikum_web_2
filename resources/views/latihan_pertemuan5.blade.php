@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/daftarbuku.css">
-    <title>Latihan Pertemuan 5</title>
-</head>
-<body>
-    @extends('mainStyle')
+@extends('layouts.app')
+
+@section('content')
+
     
+
     <div class="d-flex flex-column align-items-center table_box">
         <h1 style="font-weight: 700">DAFTAR BUKU</h1>
+
+        @if (Session::has('pesan'))
+            <div class="alert">{{Session::get('pesan')}}</div>
+        @endif
+
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -34,12 +33,12 @@
                     <th scope="row">
                         <form action="{{ route('buku.destroy', $buku->id)}}" method="post">
                             @csrf
-                            <button onclick="return confirm('Yakin mau dihapus?')" class="aksi hapus">Hapus</button>
+                            <button onclick="return confirm('Yakin mau dihapus?')" class="btn btn-danger">Hapus</button>
                         </form>
                     </th>
                     <th scope="row">
                         <a href="{{ route('buku.edit', $buku->id)}}">
-                            <button class="aksi edit">Edit</button>
+                            <button class="btn btn-warning">Edit</button>
                         </a> 
                     </th>
                         
@@ -47,19 +46,18 @@
                 @endforeach
             </tbody>
         </table>
+        <div>{{ $data_buku->links() }}</div>
+        <div><strong>Jumlah Buku: {{$jumlah_buku}}</strong></div>
     
     
-        <p class="keterangan align-self-start">Total Jumlah buku : {{$total_buku}}</p>
-        <p class="keterangan align-self-start">Total Harga buku : {{"Rp".number_format($total_harga, 2, ',', '.')}}</p>
     
         {{-- Pertemuan 6 --}}
-        <div class="tombolTambahBuku">
-            <a href="{{ route('buku.create')}} ">Tambah Buku</a>
-        </div>
+         <a href="{{ route('buku.create')}} " class="btn btn-primary">Tambah Buku</a>
+        
 
     </div>
 
 
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js' integrity='sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL' crossorigin='anonymous'></script>
 
-</body>
-</html>
+@endsection

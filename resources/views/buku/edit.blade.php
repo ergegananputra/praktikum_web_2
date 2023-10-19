@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/css/tambahbuku.css">
-    <title>Halaman Edit</title>
-</head>
-<body>
-    @extends('../mainStyle')
+@extends('layouts.app')
+
+@section('content')
+
     <div class="d-flex flex-column align-items-center">
         <h1>EDIT BUKU</h1>
         <form action="{{route('buku.update', $buku->id)}}" method="POST" class="form_tambah_buku">
@@ -38,11 +31,11 @@
                 </div>
             </div>
 
-            <div class="aksi row justify-content-around">
-                <div class="align-self-center batal"><a href="/buku">Batal</a></div>
-                <button type="submit" class="align-self-center simpan">Simpan</button>
+            <div class="row justify-content-around">
+                <div class="btn btn-warning"><a href="/buku">Batal</a></div>
+                <button type="submit" class="btn btn-primary align-self-center">Simpan</button>
             </div>
         </form>
     </div>
-</body>
-</html>
+
+@endsection

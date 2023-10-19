@@ -9,13 +9,15 @@ class BookController extends Controller
 {
     public function index()
     {
-        $data_buku = Buku::all();
+        $batas = 5;
+        $jumlah_buku = Buku::count();
+        $data_buku = Buku::orderBy('id', 'desc')->paginate($batas);
+        $no = $batas * ($data_buku->currentPage() - 1);
 
-        $total_buku = Buku::count();
-        $total_harga = Buku::sum('harga');
+        
 
 
-        return view('latihan_pertemuan5', compact('data_buku', 'total_buku', 'total_harga'));
+        return view('latihan_pertemuan5', compact('data_buku', 'no' ,'jumlah_buku'));
     }
 
     /**
@@ -31,13 +33,20 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'judul' => 'required|min:5',
+            'penulis' => 'required',
+            'harga' => 'required|numeric',
+            'tgl_terbit' => 'required|date'
+        ]);
+
         $buku = new Buku;
         $buku->judul = $request->judul;
         $buku->penulis = $request->penulis;
         $buku->harga = $request->harga;
         $buku->tgl_terbit = $request->tgl_terbit;
         $buku->save();
-        return redirect('/buku');
+        return redirect('/buku')->with('pesan', 'Data Buku berhasil disimpan');
     }
 
     /**
