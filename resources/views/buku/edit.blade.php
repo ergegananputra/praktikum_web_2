@@ -4,7 +4,7 @@
 
     <div class="d-flex flex-column align-items-center">
         <h1>EDIT BUKU</h1>
-        <form action="{{route('buku.update', $buku->id)}}" method="POST" class="form_tambah_buku">
+        <form action="{{route('buku.update', $buku->id)}}" method="POST" class="container">
             @csrf
             <div class="form-group row">
                 <label for="judul" class="col-sm-2 col-form-label">Judul</label>
@@ -30,10 +30,11 @@
                     <input type="date" class="form-control" id="tgl_terbit" name="tgl_terbit" value="{{$buku->tgl_terbit}}">
                 </div>
             </div>
-
-            <div class="row justify-content-around">
-                <div class="btn btn-warning"><a href="/buku">Batal</a></div>
-                <button type="submit" class="btn btn-primary align-self-center">Simpan</button>
+            <br>
+            <div class="row justify-content-center">
+                <a href="/buku" class="col-sm-2 btn btn-warning">Batal</a>
+                <div class="col-sm-1"></div>
+                <button type="submit" class="col-sm-2 btn btn-primary align-self-center">Simpan</button>
             </div>
         </form>
     </div>

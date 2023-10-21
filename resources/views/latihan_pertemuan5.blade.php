@@ -4,12 +4,23 @@
 
     
 
-    <div class="d-flex flex-column align-items-center table_box">
-        <h1 style="font-weight: 700">DAFTAR BUKU</h1>
+    <div class="d-flex flex-column align-items-center">
 
         @if (Session::has('pesan'))
-            <div class="alert">{{Session::get('pesan')}}</div>
+            <div class="alert alert-success container-fluid">{{Session::get('pesan')}}</div>
         @endif
+        @if (Session::has('pesan_danger'))
+            <div class="alert alert-danger container-fluid">{{Session::get('pesan_danger')}}</div>
+        @endif
+
+        {{-- Tugas Pertemuan 8 Menambah Fitur Search --}}
+        <form action="{{route('buku.search')}}" method="get" class="container">
+            <div class="input-group">
+                <input type="text" class="form-control" name="kata" placeholder="Cari ...">
+                <button class="btn btn-outline-secondary" type="submit" id="button-search">Cari</button>
+            </div>
+        </form>
+
 
         <table class="table table-striped">
             <thead>

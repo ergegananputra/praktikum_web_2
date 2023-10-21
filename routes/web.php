@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [BookController::class, 'index']);
 
 Route::get('/buku', [BookController::class, 'index']);
 Route::get('/buku/create', [BookController::class, 'create'])->name('buku.create');
@@ -26,3 +24,5 @@ Route::post('/buku/delete/{id}', [BookController::class, 'destroy'])->name('buku
 
 Route::get('/buku/edit/{id}', [BookController::class, 'edit'])->name('buku.edit');
 Route::post('/buku/update/{id}', [BookController::class, 'update'])->name('buku.update');
+
+Route::get('/buku/search', [BookController::class, 'search'])->name('buku.search');
