@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.my_theme')
 
 @section('content')
     <div class="d-flex flex-column align-items-center">
