@@ -1,4 +1,4 @@
-@extends('layouts.my_theme')
+@extends('layouts.app')
 
 @section('content')
     <div class="d-flex flex-column align-items-center">
@@ -13,6 +13,7 @@
                 </div>
             </form>
             
+            <br>
 
             {{-- Tambahan untuk menampilkan data --}}
             <table class="table table-striped">

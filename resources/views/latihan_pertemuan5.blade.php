@@ -1,12 +1,7 @@
-@extends('layouts.my_theme')
+@extends('layouts.app')
 
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
+@section('content')
+    <br>
     <div class="d-flex flex-column align-items-center">
 
         @if (Session::has('pesan'))
@@ -25,6 +20,7 @@
         </form>
 
 
+        <br>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -71,4 +67,4 @@
 
     </div>
     
-</x-app-layout>
+@endsection
