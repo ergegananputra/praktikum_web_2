@@ -1,0 +1,59 @@
+body{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20pt;
+}
+
+.card{
+    height: 300pt;
+    width: fit-content;
+    max-width: 600pt;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    
+    background-color: rgba(230, 225, 225, 0.474);
+    padding: 30pt;
+    margin-bottom: 20pt;
+    margin-right: 20pt;
+    border-radius: 30pt;
+}
+
+.container .card_title{
+    font-size: 40pt;
+    font-weight: 900;
+    color: rgb(34, 18, 179);
+}
+
+.container .description{
+    margin-top: 10pt;
+    margin-bottom: 10pt;
+    font-size: 20pt;
+    font-weight: 500;
+    color: rgb(46, 46, 46);
+}
+
+.button{
+    font-size: 20pt;
+    font-weight: 600;
+    text-align: center;
+    color: whitesmoke;
+
+    padding: 15pt;
+    background-color: #2460d8;
+    border-radius: 30pt;
+    
+    transition: 0.5s;
+
+    border-width: 0;
+}
+
+.button:hover{
+    font-weight: 600;
+    color: rgb(33, 33, 33);
+    background-color: #92b6ff;
+    transition: 0.5s;
+    
+}
