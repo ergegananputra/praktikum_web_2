@@ -25,6 +25,7 @@
             <thead>
                 <tr>
                     <th scope="col">ID</th>
+                    <th scope="col">GAMBAR</th>
                     <th scope="col">JUDUL BUKU</th>
                     <th scope="col">PENULIS</th>
                     <th scope="col">HARGA</th>
@@ -41,6 +42,18 @@
                 @foreach($data_buku as $buku)
                 <tr>
                     <th scope="row">{{$buku->id}}</th>
+                    @if ($buku->filepath)
+                        <th scope="row">
+                            <div>
+                                <img 
+                                    src="{{asset('storage/'.$buku->filepath)}}" 
+                                    alt="" 
+                                    class="h-full w-full object-cover object-center">
+                            </div>
+                        </th>
+                    @else
+                        <th></th>
+                    @endif
                     <th scope="row">{{$buku->judul}}</th>
                     <th scope="row">{{$buku->penulis}}</th>
                     <th scope="row">{{'Rp'.number_format($buku->harga, 2, ',', '.')}}</th>

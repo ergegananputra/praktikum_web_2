@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/buku/edit/{id}', [BookController::class, 'edit'])->name('buku.edit');
         Route::post('/buku/update/{id}', [BookController::class, 'update'])->name('buku.update');
         Route::post('/buku', [BookController::class, 'store']) -> name('buku.store');
+
+        Route::post('/buku/edit/{id}/gallery/delete/{img_id}', [BookController::class, 'deleteGallery'])->name('buku.delete.image');
     });
 });
 

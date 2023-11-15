@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
+use App\Models\Gallery;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class BookController extends Controller
 {
@@ -55,15 +57,45 @@ class BookController extends Controller
             'judul' => 'required|min:5',
             'penulis' => 'required',
             'harga' => 'required|numeric',
-            'tgl_terbit' => 'required|date'
+            'tgl_terbit' => 'required|date',
+
+            'thumbnail' => 'image|mimes:jpeg,png,jpg|max:2048',
         ]);
+
+        $filename = time().'_'.$request->file('thumbnail')->getClientOriginalName();
+        $filepath = $request->file('thumbnail')->storeAs('uploads', $filename, 'public');
+
+        Image::make(storage_path().'/app/public/uploads/'.$filename)
+            -> fit(240,320)
+            -> save();
 
         $buku = new Buku;
         $buku->judul = $request->judul;
         $buku->penulis = $request->penulis;
         $buku->harga = $request->harga;
         $buku->tgl_terbit = $request->tgl_terbit;
+        $buku->filename = $filename;
+        $buku->filepath = $filepath;
+
+
         $buku->save();
+
+        if ($request->file('gallery')) {
+            foreach ($request -> file('gallery') as $key => $file) {
+                $fileName = time().'_'.$file -> getClientOriginalName();
+                $filepath = $file -> storeAs('uploads', $fileName, 'public');
+
+                $gallery = Gallery::create([
+                    'nama_galeri' => $fileName,
+                    'path' => '/storage/'.$filepath,
+                    'galeri_seo' => strtolower(str_replace(' ', '-', $fileName)),
+                    'foto' => $fileName,
+                    'buku_id' => $buku->id
+                ]);
+            }
+        }
+
+        
         return redirect('/buku')->with('pesan', 'Data Buku berhasil disimpan');
     }
 
@@ -90,11 +122,52 @@ class BookController extends Controller
     public function update(Request $request, $id)
     {
         $buku = Buku::find($id);
-        $buku->judul = $request->judul;
-        $buku->penulis = $request->penulis;
-        $buku->harga = $request->harga;
-        $buku->tgl_terbit = $request->tgl_terbit;
-        $buku->save();
+
+        $request->validate([
+            'thumbnail' => 'image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        try {
+            $filename = time().'_'.$request->file('thumbnail')->getClientOriginalName();
+            $filepath = $request->file('thumbnail')->storeAs('uploads', $filename, 'public');
+
+
+            Image::make(storage_path().'/app/public/uploads/'.$filename)
+                -> fit(240,320)
+                -> save();
+
+            $buku->update([
+                'filename' => $filename,
+                'filepath' => $filepath,
+            ]);
+        } catch (\Throwable $th) {
+
+        }
+        
+
+        $buku->update([
+            'judul'     => $request->judul,
+            'penulis'   => $request->penulis,
+            'harga'     => $request->harga,
+            'tgl_terbit'=> $request->tgl_terbit,
+        ]);
+
+        if ($request->file('gallery')) {
+            foreach ($request -> file('gallery') as $key => $file) {
+                $fileName = time().'_'.$file -> getClientOriginalName();
+                $filepath = $file -> storeAs('uploads', $fileName, 'public');
+
+                $gallery = Gallery::create([
+                    'nama_galeri' => $fileName,
+                    'path' => '/storage/'.$filepath,
+                    'galeri_seo' => strtolower(str_replace(' ', '-', $fileName)),
+                    'foto' => $fileName,
+                    'buku_id' => $id
+                ]);
+            }
+        }
+
+        
         return redirect('/buku')->with('pesan', 'Data Buku berhasil diupdate');
     }
 
@@ -106,5 +179,16 @@ class BookController extends Controller
         $buku = Buku::find($id);
         $buku->delete();
         return redirect('/buku')->with('pesan_danger', 'Data Buku berhasil dihapus');
+    }
+
+
+    /**
+     * Remove the specified image gallery
+     */
+    public function deleteGallery($id, $img_id)
+    {
+        $gallery = Gallery::find($img_id);
+        $gallery->delete();
+        return redirect('/buku/edit/'.$id)->with('pesan_danger', 'Data Gambar berhasil dihapus');
     }
 }
