@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('penulis');
             $table->integer('harga');
             $table->date('tgl_terbit');
+            $table->string('buku_seo')->nullable(); // Add this line
             $table->string('filename')->nullable();
             $table->string('filepath')->nullable();
             $table->timestamps();
