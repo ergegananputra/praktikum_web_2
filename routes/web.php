@@ -23,14 +23,14 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/buku', [BookController::class, 'index'])->name('buku');
+Route::get('/buku/search', [BookController::class, 'search'])->name('buku.search');
+Route::get('/buku/detail-buku/{buku_seo}', [BookController::class, 'galeribuku'])->name('buku.detail');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    // Masukan sini bisa
-    Route::get('/buku', [BookController::class, 'index'])->name('buku');
-    Route::get('/buku/search', [BookController::class, 'search'])->name('buku.search');
 
     Route::middleware('admin')->group(function () {
         Route::post('/buku/delete/{id}', [BookController::class, 'destroy'])->name('buku.destroy');

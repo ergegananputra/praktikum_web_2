@@ -24,7 +24,7 @@
                         <th scope="col">PENULIS</th>
                         <th scope="col">HARGA</th>
                         <th scope="col">TGL TERBIT</th>
-                        @if (Auth::user()->level == 'admin')
+                        @if (Auth::user() != null && Auth::user()->level == 'admin')
                             <th scope="col" colspan="2" style="text-align: center">AKSI</th>
                          @endif
 
@@ -38,7 +38,7 @@
                         <th scope="row">{{$buku->penulis}}</th>
                         <th scope="row">{{'Rp'.number_format($buku->harga, 2, ',', '.')}}</th>
                         <th scope="row">{{\Carbon\Carbon::parse($buku->tgl_terbit)->format('d/m/Y')}}</th>
-                        @if (Auth::user()->level == 'admin')
+                        @if (Auth::user() != null && Auth::user()->level == 'admin')
                         <th scope="row">
                             <form action="{{ route('buku.destroy', $buku->id)}}" method="post">
                                 @csrf
