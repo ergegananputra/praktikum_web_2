@@ -76,6 +76,7 @@ class BookController extends Controller
         $buku->tgl_terbit = $request->tgl_terbit;
         $buku->filename = $filename;
         $buku->filepath = $filepath;
+        $buku->buku_seo = strtolower(str_replace(' ', '_', $request->judul)); // Tambahkan baris ini
 
 
         $buku->save();
@@ -190,5 +191,16 @@ class BookController extends Controller
         $gallery = Gallery::find($img_id);
         $gallery->delete();
         return redirect('/buku/edit/'.$id)->with('pesan_danger', 'Data Gambar berhasil dihapus');
+    }
+
+
+    /*
+    * Display the specified resource.
+    */
+    public function galeribuku($buku_seo)
+    {
+        $buku = Buku::where('buku_seo', $buku_seo)->first();
+        $galeri = $buku->galleries()->orderBy('id', 'desc')->paginate(6);
+        return view('buku.detail_buku', compact('buku', 'galeri'));
     }
 }
