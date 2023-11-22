@@ -17,6 +17,7 @@ class Buku extends Model
         'penulis',
         'harga',
         'tgl_terbit',
+        'buku_seo',
         'filename', 
         'filepath', 
         'created_at',
