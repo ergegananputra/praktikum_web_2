@@ -201,6 +201,10 @@ class BookController extends Controller
         $rating = RatingModel::where('buku_id', $buku->id)->avg('rating');
         if($rating == 0 || $rating == null) {
             $rating = "Rating is not available";
+        } else {
+            $rounded_rating = round($rating, 2);
+            // join string with 'out of 5'
+            $rating = $rounded_rating . ' out of 5';
         }
         $galeri = $buku->galleries()->orderBy('id', 'desc')->paginate(6);
         return view('buku.detail_buku', compact('buku', 'galeri', 'rating'));
