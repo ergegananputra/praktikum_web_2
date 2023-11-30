@@ -57,6 +57,48 @@
         </div>
         <div>{{ $galeri->links() }}</div>
 
+        <br>
+        {{-- RATING QUIZZ--}}
+        <div class="row w-100">
+            <div class="col-2"><p><strong>Rating Saat Ini :</strong></p></div>
+            <div class="col-4"><p>{{$rating}}</p></div>
+        </div>
+
+        {{-- Form Rating --}}
+        @if (Auth::user() != null)
+            <form action="{{ route('buku.rating', $buku->id)}}" method="post">
+                @csrf
+                <div class="row w-100">
+                    <div class="col-2"><p><strong>Rating Baru :</strong></p></div>
+                    <div class="col-4">
+                        <input type="number" name="rating" id="rating" min="0" max="5" step="1" value="0">
+                    </div>
+                </div>
+                
+                <div class="row w-100">
+                    <button type="submit" class="btn btn-primary">Submit Rating</button>
+                </div>
+
+            </form>
+        @endif
+
+        <br>
+        <br>
+
+        {{-- Add to favorites --}}
+        @if (Auth::user() != null)
+            <form action="{{ route('buku.addFavorite', $buku->id)}}" method="post">
+                @csrf
+                <div class="row w-100">
+                    <button type="submit" class="btn btn-primary">Tambahkan Ke Favorites</button>
+                </div>
+            </form>
+        @endif
+
+
+        
+        
+
 
 
         

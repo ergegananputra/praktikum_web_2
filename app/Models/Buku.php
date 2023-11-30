@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Buku extends Model
@@ -14,6 +15,7 @@ class Buku extends Model
     protected $dates = ['tgl_terbit'];
     protected $fillable = [
         'judul',
+        'rating',
         'penulis',
         'harga',
         'tgl_terbit',
@@ -35,6 +37,16 @@ class Buku extends Model
     public function galleries(): HasMany
     {
         return $this->hasMany(Gallery::class);
+    }
+
+    public function rating(): HasMany
+    {
+        return $this->hasMany(RatingModel::class);
+    }
+
+    public function favorites(): BelongsTo
+    {
+        return $this->belongsTo(FavoritesModel::class);
     }
 
 }

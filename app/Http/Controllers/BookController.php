@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
+use App\Models\FavoritesModel;
 use App\Models\Gallery;
+use App\Models\RatingModel;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
@@ -20,10 +22,6 @@ class BookController extends Controller
         $jumlah_buku = Buku::count();
         $data_buku = Buku::orderBy('id', 'desc')->paginate($batas);
         $no = $batas * ($data_buku->currentPage() - 1);
-
-        
-
-
         return view('latihan_pertemuan5', compact('data_buku', 'no' ,'jumlah_buku'));
     }
 
@@ -200,7 +198,46 @@ class BookController extends Controller
     public function galeribuku($buku_seo)
     {
         $buku = Buku::where('buku_seo', $buku_seo)->first();
+        $rating = RatingModel::where('buku_id', $buku->id)->avg('rating');
+        if($rating == 0 || $rating == null) {
+            $rating = "Rating is not available";
+        }
         $galeri = $buku->galleries()->orderBy('id', 'desc')->paginate(6);
-        return view('buku.detail_buku', compact('buku', 'galeri'));
+        return view('buku.detail_buku', compact('buku', 'galeri', 'rating'));
+    }
+
+
+    public function rateDisBook(Request $request, $buku_id)
+    {
+        $buku = Buku::find($buku_id);
+        $rating = RatingModel::create([
+            'rating' => $request->rating,
+            'buku_id' => $buku_id,
+        ]);
+
+        $buku->update([
+            'rating' => $buku->rating()->avg('rating')
+        ]);
+
+        return redirect()->back()->with('pesan', 'Terima kasih atas ratingnya');
+    }
+
+    public function myFavourite()
+    {
+        $userFavoritesBook = FavoritesModel::where('user_id', auth()->user()->id)->get();
+        $data_buku = [];
+        foreach ($userFavoritesBook as $key => $value) {
+            $data_buku[] = Buku::find($value->buku_id);
+        }
+        return view('buku.favorites', compact('data_buku'));
+    }
+
+    public function addFavorites($buku_id) {
+        $favorites = FavoritesModel::create([
+            'user_id' => auth()->user()->id,
+            'buku_id' => $buku_id,
+        ]);
+
+        return redirect()->back()->with('pesan', 'Buku berhasil ditambahkan ke daftar favorit');
     }
 }

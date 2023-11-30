@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('buku', function(Blueprint $table) {
+        Schema::create('buku_rating', function(Blueprint $table) {
             $table->id();
-            $table->string('judul');
             $table->integer('rating')->default(0);
-            $table->string('penulis');
-            $table->integer('harga');
-            $table->date('tgl_terbit');
-            $table->string('buku_seo')->nullable(); // Add this line
-            $table->string('filename')->nullable();
-            $table->string('filepath')->nullable();
+            $table->unsignedBigInteger('buku_id');
+            $table->foreign('buku_id')
+                ->references('id')
+                ->on('buku')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('buku');
+        Schema::dropIfExists('buku_rating');
     }
 };

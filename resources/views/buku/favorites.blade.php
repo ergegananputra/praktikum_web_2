@@ -31,13 +31,8 @@
                     <th scope="col">PENULIS</th>
                     <th scope="col">HARGA</th>
                     <th scope="col">TGL TERBIT</th>
-
-                    @if (Auth::user() != null && Auth::user()->level == 'admin')
-                        <th scope="col" colspan="3" style="text-align: center">AKSI</th>
-                    @else
-                        <th scope="col" colspan="1" style="text-align: center">DETAIL</th>
-                    @endif
-
+                    <th scope="col" colspan="1" style="text-align: center">DETAIL</th>
+                    
 
                     
                 </tr>
@@ -63,19 +58,6 @@
                     <th scope="row">{{$buku->penulis}}</th>
                     <th scope="row">{{'Rp'.number_format($buku->harga, 2, ',', '.')}}</th>
                     <th scope="row">{{\Carbon\Carbon::parse($buku->tgl_terbit)->format('d/m/Y')}}</th>
-                    @if (Auth::user() != null && Auth::user()->level == 'admin')
-                        <th scope="row">
-                            <form action="{{ route('buku.destroy', $buku->id)}}" method="post">
-                                @csrf
-                                <button onclick="return confirm('Yakin mau dihapus?')" class="btn btn-danger">Hapus</button>
-                            </form>
-                        </th>
-                        <th scope="row">
-                            <a href="{{ route('buku.edit', $buku->id)}}">
-                                <button class="btn btn-warning">Edit</button>
-                            </a> 
-                        </th>
-                    @endif
                     <th scope="row">
                         <a href="{{ route('buku.detail', $buku->buku_seo)}}">
                             <button class="btn btn-primary">Detail</button>
@@ -88,14 +70,8 @@
                 @endforeach
             </tbody>
         </table>
-        <div>{{ $data_buku->links() }}</div>
-        <div><strong>Jumlah Buku: {{$jumlah_buku}}</strong></div>
     
     
-    
-        @if (Auth::user() != null && Auth::user()->level == 'admin')
-            <a href="{{ route('buku.create')}} " class="btn btn-primary">Tambah Buku</a> 
-        @endif
          
         
 
