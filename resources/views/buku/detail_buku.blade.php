@@ -88,7 +88,7 @@
             <form action="{{ route('buku.addFavorite', $buku->id)}}" method="post">
                 @csrf
                 <div class="row w-100">
-                    <button type="submit" class="btn btn-primary">Tambahkan Ke Favorites</button>
+                    <button type="submit" class="btn btn-primary">Simpan ke daftar favorit</button>
                 </div>
             </form>
         @endif
