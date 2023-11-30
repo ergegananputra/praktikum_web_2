@@ -233,11 +233,17 @@ class BookController extends Controller
     }
 
     public function addFavorites($buku_id) {
+
+        $check = FavoritesModel::where('user_id', auth()->user()->id)->where('buku_id', $buku_id)->first();
+        if($check) {
+            return redirect()->back();
+        }
+
         $favorites = FavoritesModel::create([
             'user_id' => auth()->user()->id,
             'buku_id' => $buku_id,
         ]);
 
-        return redirect()->back()->with('pesan', 'Buku berhasil ditambahkan ke daftar favorit');
+        return redirect()->back();
     }
 }

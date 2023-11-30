@@ -66,20 +66,18 @@
 
         {{-- Form Rating --}}
         @if (Auth::user() != null)
+        <div class="w-100">
             <form action="{{ route('buku.rating', $buku->id)}}" method="post">
                 @csrf
                 <div class="row w-100">
                     <div class="col-2"><p><strong>Rating Baru :</strong></p></div>
-                    <div class="col-4">
+                    <div class="col-1">
                         <input type="number" name="rating" id="rating" min="0" max="5" step="1" value="0">
                     </div>
+                    <button type="submit" class="btn btn-info col-3">Submit Rating</button>
                 </div>
-                
-                <div class="row w-100">
-                    <button type="submit" class="btn btn-primary">Submit Rating</button>
-                </div>
-
             </form>
+        </div>
         @endif
 
         <br>
